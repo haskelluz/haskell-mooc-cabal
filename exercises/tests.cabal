@@ -1,25 +1,27 @@
-name: tests
-version: 0.0.1
-build-type: Simple
-cabal-version: >= 1.10
+name:          tests
+version:       0.0.1
+build-type:    Simple
+cabal-version: >=1.10
 
 library
-  build-depends: QuickCheck==2.14.3
-               , hspec==2.9.7
-               , base==4.16.4.0
-               , containers==0.6.5.1
-               , array==0.5.4.0
-               , transformers==0.5.6.2
-               , template-haskell==2.18.0.0
-               , th-abstraction==0.4.5.0
-               , generic-random==1.5.0.1
-               , JuicyPixels==3.3.7
-               , HTTP==4000.4.1
-               , http-types==0.12.3
-               , text==1.2.5.0
-               , bytestring==0.11.4.0
-               , wai==3.2.3
-               , warp==3.3.23
-               , sqlite-simple==0.4.18.2
-               , parallel==3.2.2.0
+  build-depends:
+      array             ==0.5.4.0
+    , base              >=4.7      && <5
+    , bytestring        ==0.11.4.0
+    , containers        ==0.6.5.1
+    , generic-random    ==1.5.0.1
+    , hspec             >=2.9.7    && <3
+    , HTTP              ==4000.4.1
+    , http-types        ==0.12.3
+    , JuicyPixels       ==3.3.7
+    , parallel          ==3.2.2.0
+    , QuickCheck        ==2.14.3
+    , sqlite-simple     ==0.4.18.2
+    , template-haskell  >=2.18.0.0 && <3
+    , text              ==1.2.5.0
+    , th-abstraction    ==0.4.5.0
+    , transformers      ==0.5.6.2
+    , wai               ==3.2.3
+    , warp              ==3.3.23
+
   default-language: Haskell2010
