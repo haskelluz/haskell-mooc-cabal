@@ -29,7 +29,7 @@ Exercises can be found under `exercises/` directory. All required dependencies
 can be downloaded and built with:
 
 ```
-stack build
+cabal build
 ```
 
 Exercises are Haskell source code files named `Set1.hs`, `Set2.hs` and so on.
@@ -37,7 +37,7 @@ You complete the exercises by editing the file according to the instructions in
 the file. You can check your answers by running
 
 ```
-stack runhaskell SetXTest.hs
+cabal exec -- runhaskell SetXTest.hs
 ```
 
 in the `exercises/` directory. Remember to replace `X` with the number
@@ -47,10 +47,9 @@ See [the material](part1.html#working-on-the-exercises) for more info.
 
 ## Troubleshooting
 
-Here are some fixes for common problems with `stack build`:
+Here are some fixes for common problems with `cabal build`:
 
-- If you get an error like `While building package zlib-0.6.2.3`, you need to install the zlib library headers. The right command for Ubuntu is `sudo apt install zlib1g-dev`.
-- If you get an error like `Downloading lts-18.18 build plan ... RedownloadInvalidResponse`, your version of stack is too old. Run `stack upgrade` to get a newer one.
+- If you get an error like `While building package zlib-0.6.2.3`, you need to install the zlib library headers. The right command for Ubuntu is `sudo apt install zlib1g-dev`. If you have Nix, you can use the existing `flake.nix`, which already contains `libz` with `nix develop`.
 
 ## Reporting errors
 
