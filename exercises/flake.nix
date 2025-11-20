@@ -3,24 +3,44 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
-  outputs = { self, nixpkgs, flake-utils }: flake-utils.lib.eachDefaultSystem (system:
-    let
-      pkgs = nixpkgs.legacyPackages.${system};
-    in
-    {
-      devShells.default = pkgs.mkShell ({
-        buildInputs = with pkgs; [
-          haskell.compiler.ghc94
-          cabal-install
-          (haskell-language-server.override { supportedGhcVersions = [ "94" ]; })
-          haskellPackages.cabal-fmt
-          haskellPackages.fourmolu
-          libz
-        ];
-      });
-    }
-  );
+  outputs =
+    { flake-parts
+    , ...
+    }@inputs: flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [
+        "x86_64-linux"
+        "aarch64-darwin"
+      ];
+
+      perSystem = { system, pkgs, ... }:
+        let
+          hpkgs = pkgs.haskell.packages.ghc912;
+
+          tests = pkgs.haskell.lib.overrideCabal (hpkgs.callCabal2nix "tests" ./. { }) (_: {
+            doCheck = true;
+            doHaddock = false;
+            enableLibraryProfiling = false;
+            enableExecutableProfiling = false;
+          });
+        in
+        {
+          packages.default = tests;
+
+          devShells.default = pkgs.mkShell {
+            buildInputs = [
+              hpkgs.cabal-install
+              hpkgs.haskell-language-server
+              hpkgs.fourmolu
+              hpkgs.ghcid
+              hpkgs.ghc
+              pkgs.haskellPackages.cabal-fmt
+              pkgs.haskellPackages.implicit-hie
+              pkgs.libz
+            ];
+          };
+        };
+    };
 }
