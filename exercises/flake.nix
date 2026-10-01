@@ -15,10 +15,9 @@
         "aarch64-darwin"
       ];
 
-      perSystem = { system, pkgs, ... }:
+      perSystem = { pkgs, ... }:
         let
-          hlib = pkgs.haskell.lib;
-          hpkgs = pkgs.haskell.packages."ghc912";
+          hpkgs = pkgs.haskell.packages.ghc912;
 
           tests = pkgs.haskell.lib.overrideCabal (hpkgs.callCabal2nix "tests" ./. { }) (_: {
             doCheck = true;
