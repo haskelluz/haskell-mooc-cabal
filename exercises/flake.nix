@@ -15,7 +15,7 @@
         "aarch64-darwin"
       ];
 
-      perSystem = { system, pkgs, ... }:
+      perSystem = { pkgs, ... }:
         let
           hpkgs = pkgs.haskell.packages.ghc912;
 
@@ -38,7 +38,8 @@
               hpkgs.ghc
               pkgs.haskellPackages.cabal-fmt
               pkgs.haskellPackages.implicit-hie
-              pkgs.libz
+              pkgs.zlib
+              pkgs.zlib.dev
             ];
           };
         };
